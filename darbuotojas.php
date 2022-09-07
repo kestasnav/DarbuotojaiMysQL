@@ -40,14 +40,14 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
 					<h1><?=$employee['name']?> <?=$employee['surname']?></h1>
 				</div>
 				<div class="card-body">
-				<div class="col-md-12">
+				<div class="col-md-6 d-flex flex-row">
 				
-			<div class="col-md-6">
+			<div class="col-md-6 ">
 				
 				<p>
 					<b>Išsilavinimas: </b> <br /> <?=$employee['education']?>
 				</p>
-				<p>
+				<p class="text-center">
 					<b>Mėnesinė alga: </b> <br /><?=$alga?> EUR
 				</p>
 				</div>
@@ -64,12 +64,12 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
 			</div>
 		</div>
 			</div>
-
+					<div class="row">
 			<div class="card mt-5 mb-5">
-			<div class="col-md-6">
+			
 
 				<div class="card-body">
-					
+				<div class="col-md-4">
 					<div class="card-header">Mokesčiai</div>
 
 					<table class="table  table-hover">
@@ -144,7 +144,7 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
 			</div>
 			
 		</div>
-		
+</div>
 	</div>
     
 </body>

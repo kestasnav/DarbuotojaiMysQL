@@ -2,13 +2,14 @@
 
 include("dblogin.php");
 
-$sql="SELECT * FROM employees";
-$result=$pdo->query($sql);
-
+$workers="SELECT * FROM employees";
+$positions="SELECT * FROM positions";
+$result=$pdo->query($workers);
+$positionsResult=$pdo->query($positions);
 
 
 $employees=$result->fetchAll(PDO::FETCH_ASSOC);
-
+$positions=$positionsResult->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,16 +26,16 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
         <div class="row">
             <div class="col-md-12">
                 <div class="card mt-5">
-                    <div class="card-header">Darbuotojų sąrašas</div>
+                    <div class="card-header"><b>Darbuotojų sąrašas</b></div>
                     <div class="card-body">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <td>Vardas</td>
-                                    <td>Pavardė</td>
-                                    <td>Gimimo data</td>
-                                    <td>Atlyginimas</td>
-                                    <td>Detalesnė informacija</td>
+                                <th>Vardas</th>
+                                <th>Pavardė</th>
+                                <th>Gimimo data</th>
+                                <th>Atlyginimas</th>
+                                <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,6 +52,35 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mt-3 mb-3">
+                    <div class="card-header"><b>Pareigų sąrašas</b></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Darbuotojų pareigos</th>
+                                    <th>Baziniai atlyginimai</th>
+                                    <th></th>                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach($positions as $position){ 
+                                $bazineAlga = $position['base_salary']/100;
+                                ?>
+                                <tr>
+                                    <td><?=$position['name']?></td>
+                                    <td><?=$bazineAlga?> EU</td>
+                                    <td><a href="#" class="btn btn-primary">Rodyti darbuotojus</a></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        </div>
                 </div>
             </div>
         </div>
