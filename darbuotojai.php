@@ -2,6 +2,20 @@
 
 include("dblogin.php");
 
+
+ 
+
+if (isset($_GET['action']) && $_GET['action']=='delete'){
+    $sql="SELECT * FROM employees WHERE id=?";
+    $stm=$pdo->prepare($sql);
+    $stm->execute([$_GET['id']]);
+    $employee=$stm->fetch(PDO::FETCH_ASSOC);
+
+    $sql="DELETE FROM employees WHERE id=?";
+    $pstm=$pdo->prepare($sql);
+    $pstm->execute([$_GET['id']]);
+}
+
 $workers="SELECT * FROM employees";
 $positions="SELECT * FROM positions";
 $result=$pdo->query($workers);
@@ -10,6 +24,7 @@ $positionsResult=$pdo->query($positions);
 
 $employees=$result->fetchAll(PDO::FETCH_ASSOC);
 $positions=$positionsResult->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,24 +43,31 @@ $positions=$positionsResult->fetchAll(PDO::FETCH_ASSOC);
                 <div class="card mt-5">
                     <div class="card-header"><b>Darbuotojų sąrašas</b></div>
                     <div class="card-body">
+                    <a href="create.php" class="btn  btn-primary float-end mb-3">Pridėti naują darbuotoją</a>
                         <table class="table">
                             <thead>
-                                <tr>
+                                <tr class="bg bg-info">
                                 <th>Vardas</th>
                                 <th>Pavardė</th>
                                 <th>Gimimo data</th>
                                 <th>Atlyginimas</th>
                                 <th></th>
+                                <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach($employees as $employee){ ?>
-                                <tr>
+                                <tr class="bg bg-light">
                                     <td><?=$employee['name']?></td>
                                     <td><?=$employee['surname']?></td>
-                                    <td><?=$employee['birthday']?> M</td>
+                                    <td><?=$employee['birthday']?></td>
                                     <td><?=$employee['salary']/100?> EU</td>
                                     <td><a class="btn btn-success" href="darbuotojas.php?id=<?=$employee['id']?>">Detaliau</a>
+                                    </td>
+                                    <td>
+                                        <a href="update.php?id=<?=$employee['id']?>" class="btn btn-info">Redaguoti</a>
+                                        <a href="darbuotojai.php?action=delete&id=<?=$employee['id']?>" class="btn btn-danger">Ištrinti</a>
+
                                     </td>
                                 </tr>
                                 <?php } ?>

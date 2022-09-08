@@ -37,16 +37,17 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
                     $alga = $employee['salary']/100;
                     ?>
                     
-					<h1><?=$employee['name']?> <?=$employee['surname']?></h1>
+					<h1><?=$employee['name']?> <?=$employee['surname']?> / <?=$employee['gender']?></h1>
 				</div>
 				<div class="card-body">
 				<div class="col-md-6 d-flex flex-row">
 				
-			<div class="col-md-6 ">
+			<div class="col-md-8 ">
 				
 				<p>
 					<b>Išsilavinimas: </b> <br /> <?=$employee['education']?>
 				</p>
+				
 				<p class="text-center">
 					<b>Mėnesinė alga: </b> <br /><?=$alga?> EUR
 				</p>
