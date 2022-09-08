@@ -27,12 +27,28 @@
         if (strlen($name) < 3) {
             $error['pavarde'] = "Pavardė per trumpa";
       }
+      if($gender == "gender") {
+        $error['gender'] = "Lytis privaloma";
       }
+
+      }
+      if(empty($phone)) {
+        $phone = Null;
+      } 
+      if(empty($birthday)) {
+        $birthday = Null;
+      } 
+      if(empty($education)) {
+        $education= Null;
+      } 
+      if(empty($salary)) {
+        $salary = 0;
+      } 
    
 if(empty($error)){
         $sql="INSERT INTO employees (name, surname, gender, phone, birthday, education, salary) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stm=$pdo->prepare($sql);
-        $stm->execute([ $_POST['name'], $_POST['surname'], $_POST['gender'], $_POST['phone'], $_POST['birthday'], $_POST['education'], $_POST['salary']]);
+        $stm->execute([ $_POST['name'], $_POST['surname'], $_POST['gender'], $phone, $birthday, $education, $salary]);
         header("location:darbuotojai.php");
         die();
     }
@@ -89,6 +105,7 @@ if(empty($error)){
                                 <option value="Vyras">Vyras</option>
                                 <option value="Moteris">Moteris</option>     
                                 </select>
+                                <?php if (isset($error['gender'])){ echo'<div class="alert alert-danger w-25 text-center">'. $error['gender'].'</div>';}?>
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Telefonas</label>
