@@ -48,7 +48,7 @@
 if(empty($error)){
         $sql="INSERT INTO employees (name, surname, gender, phone, birthday, education, salary) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stm=$pdo->prepare($sql);
-        $stm->execute([ $_POST['name'], $_POST['surname'], $_POST['gender'], $phone, $birthday, $education, $salary]);
+        $stm->execute([ $_POST['name'], $_POST['surname'], $gender, $phone, $birthday, $education, $salary]);
         header("location:darbuotojai.php");
         die();
     }

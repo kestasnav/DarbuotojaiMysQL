@@ -1,18 +1,33 @@
 <?php
  include ("dblogin.php");
   if (isset($_POST['action']) && $_POST['action']=='update'){
-    $sql="UPDATE employees SET name=?, surname=?, gender=?, phone=?, birthday=?, education=?, salary=? WHERE id=?";
+    $sql="UPDATE employees SET name=?, surname=?, gender=?, phone=?, birthday=?, education=?, salary=?, positions_id=? WHERE id=?";
     $stm=$pdo->prepare($sql);
-    $stm->execute([ $_POST['name'], $_POST['surname'], $_POST['gender'], $_POST['phone'], $_POST['birthday'], $_POST['education'], $_POST['salary'],$_POST['id']]);
+    $stm->execute([ $_POST['name'], $_POST['surname'], $_POST['gender'], $_POST['phone'], $_POST['birthday'], $_POST['education'], $_POST['salary'],$_POST['positions_id'],$_POST['id']]);
+     
     header("location:darbuotojai.php");
     die();
+    
   }
+
   $employee=[];
+  $position=[];
+  $projects=[];
   if (isset($_GET['id'])){
     $sql="SELECT * FROM employees WHERE id=?";
     $stm=$pdo->prepare($sql);
     $stm->execute([$_GET['id']]);
     $employee=$stm->fetch(PDO::FETCH_ASSOC);
+
+    $sql="SELECT * FROM positions";
+    $stm=$pdo->prepare($sql);
+    $stm->execute([]);
+    $position=$stm->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql="SELECT * FROM projects";
+    $stm=$pdo->prepare($sql);
+    $stm->execute([]);
+    $projects=$stm->fetchAll(PDO::FETCH_ASSOC);
   }else{
     header("location:darbuotojai.php");
     die();
@@ -59,7 +74,7 @@
                             <div class="mb-3">
                                 <label for="" class="form-label">Lytis</label>
                                 <br>
-                                <select name="gender" id="file"  value="<?=$employee['gender']?>">
+                                <select name="gender" id="file" class="form-control" value="<?=$employee['gender']?>">
                                 <option value="gender">Pasirinkite lytį</option>
                                 <option value="Vyras">Vyras</option>
                                 <option value="Moteris">Moteris</option>     
@@ -81,6 +96,15 @@
                                 <label for="" class="form-label">Atlyginimas</label>
                                 <input name="salary" type="text" class="form-control"  value="<?=$employee['salary']?>">
                             </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Pareigos: </label>
+                                <select name="positions_id" class="form-control mb-3">
+                                    <?php foreach($position as $pos){ ?>
+                                        
+                                    <option value="<?=$pos['id']?>"  <?=($pos['id']==$employee['positions_id'])?'selected':''?>><?=$pos['name']?></option>
+                                    <?php } ?>  
+                                </select>
+                                
                             <button class="btn btn-success">Redaguoti</button>
                             <a href="darbuotojai.php" class="btn btn-info float-end">Atgal</a>
 

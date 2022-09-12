@@ -1,8 +1,8 @@
 <?php
 
 include("dblogin.php");
-
-$sql="SELECT * FROM employees WHERE id=?";
+$sql="SELECT employees.*,positions.name as positions_name FROM employees LEFT JOIN positions ON employees.positions_id=positions.id WHERE employees.id=?";
+//$sql="SELECT * FROM employees WHERE id=?";
 $result=$pdo->prepare($sql);
 $result->execute([$_GET['id']]);
 
@@ -46,6 +46,9 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
 				
 				<p>
 					<b>Išsilavinimas: </b> <br /> <?=$employee['education']?>
+				</p>
+				<p class="text-center">
+					<b>Pareigos: </b> <br /> <?=$employee['positions_name']?>
 				</p>
 				
 				<p class="text-center">

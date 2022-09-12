@@ -65,6 +65,7 @@ $positions=$positionsResult->fetchAll(PDO::FETCH_ASSOC);
                                     <td><a class="btn btn-success" href="darbuotojas.php?id=<?=$employee['id']?>">Detaliau</a>
                                     </td>
                                     <td>
+                                        <a href="addProjects.php?id=<?=$employee['id']?>" class="btn btn-warning">Priskirti pareigas</a>
                                         <a href="update.php?id=<?=$employee['id']?>" class="btn btn-info">Redaguoti</a>
                                         <a href="darbuotojai.php?action=delete&id=<?=$employee['id']?>" class="btn btn-danger">Ištrinti</a>
 
