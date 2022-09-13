@@ -17,10 +17,13 @@ if (isset($_GET['action']) && $_GET['action']=='delete'){
 }
 
 $workers="SELECT * FROM employees";
-$positions="SELECT * FROM positions";
+
+$positions="SELECT *, employees.positions_id, positions.id as emID, positions.name as posName, count(employees.positions_id) as kiekis FROM positions LEFT JOIN employees ON positions_id=positions.id GROUP BY employees.positions_id";
+
 $result=$pdo->query($workers);
 $positionsResult=$pdo->query($positions);
 
+$workersAvg=$pdo->query("SELECT *,  count(*) as darbSK, min(salary) as minSal, avg(salary) as avgSal, max(salary) as maxSal FROM employees")->fetchAll(PDO::FETCH_ASSOC);
 
 $employees=$result->fetchAll(PDO::FETCH_ASSOC);
 $positions=$positionsResult->fetchAll(PDO::FETCH_ASSOC);
@@ -88,20 +91,48 @@ $positions=$positionsResult->fetchAll(PDO::FETCH_ASSOC);
                                 <tr>
                                     <th>Darbuotojų pareigos</th>
                                     <th>Baziniai atlyginimai</th>
+                                    <th>Darbuotojų skaičius</th>
                                     <th></th>                                   
                                 </tr>
                             </thead>
                             <tbody>
                             <?php foreach($positions as $position){ 
+                                
                                 $bazineAlga = $position['base_salary']/100;
                                 ?>
+                               
                                 <tr>
-                                    <td><?=$position['name']?></td>
+                                    <td><?=$position['posName']?></td>
                                     <td><?=$bazineAlga?> EU</td>
-                                    <td><a href="#" class="btn btn-primary">Rodyti darbuotojus</a></td>
+                                    
+                                     <td><?=$position['kiekis']?></td>
+                                    
+                                    <td><a class="btn btn-success" href="darbuotojuPareigos.php?id=<?=$position['emID']?>">Rodyti darbuotojus</a></td>
                                     </tr>
-                                <?php } ?>
+                                <?php }  ?>
+                              
                             </tbody>
+                        </table>
+                        </div>
+                </div>
+            </div>
+        
+        
+            <div class="col-md-6">
+                <div class="card mt-3 mb-3">
+                    <div class="card-header"><b>Įmonės statistika</b></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <?php foreach($workersAvg as $wrkAvg) { ?>
+                                <tr>Įmonėje dirbančių darbuotojų skaičius: </tr> <b><span><?=$wrkAvg['darbSK']?></span></b><br>
+                                <tr>Vidutinis darbo užmokestis: </tr> <b><span><?=$wrkAvg['avgSal']/100?> EU</span></b><br>
+                                <tr>Mažiausias darbo užmokestis: </tr> <b><span><?=$wrkAvg['minSal']/100?> EU</span></b><br>
+                                <tr>Didžiausias darbo užmokestis: </tr> <b><span><?=$wrkAvg['maxSal']/100?> EU</span></b><br>
+                                  <?php } ?>                                 
+                                </tr>
+                            </thead>                            
                         </table>
                         </div>
                 </div>

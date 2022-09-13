@@ -71,15 +71,22 @@
                                 <label for="" class="form-label">Pavardė</label>
                                 <input name="surname" type="text" class="form-control" value="<?=$employee['surname']?>">
                             </div>
-                            <div class="mb-3">
+                          <!--   <div class="mb-3">
                                 <label for="" class="form-label">Lytis</label>
                                 <br>
                                 <select name="gender" id="file" class="form-control" value="<?=$employee['gender']?>">
-                                <option value="gender">Pasirinkite lytį</option>
+                                <option value="gender" >Pasirinkite lytį</option>
                                 <option value="Vyras">Vyras</option>
                                 <option value="Moteris">Moteris</option>     
                                 </select>
-                            </div>
+                            </div> -->
+                            <div class="mb-3">
+                                <label for="" class="form-label">Lytis: </label>
+                                <select name="positions_id" class="form-control mb-3">                                   
+                                        
+                                    <option value="<?=$employee['gender']?>"  <?=($employee['gender']==$employee['id'])?'selected':''?>><?=$employee['gender']?></option>
+                                    
+                                </select>
                             <div class="mb-3">
                                 <label for="" class="form-label">Telefonas</label>
                                 <input name="phone" type="text" class="form-control"  value="<?=$employee['phone']?>">
