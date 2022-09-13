@@ -1,13 +1,23 @@
 <?php
 
 include("dblogin.php");
-$sql="SELECT employees.*,positions.name as positions_name FROM employees LEFT JOIN positions ON employees.positions_id=positions.id WHERE employees.id=?";
+$sql="SELECT employees.*,positions.name as positions_name FROM employees 
+LEFT JOIN positions ON employees.positions_id=positions.id 
+WHERE employees.id=?";
+$sql2="SELECT projects.name as projektas FROM employees 
+LEFT JOIN positions ON employees.positions_id=positions.id 
+LEFT JOIN employees_projects ON employees.id=employees_id
+LEFT JOIN projects ON projects.id=projects_id
+WHERE employees.id=?";
 //$sql="SELECT * FROM employees WHERE id=?";
 $result=$pdo->prepare($sql);
 $result->execute([$_GET['id']]);
-
 $employees=$result->fetchAll(PDO::FETCH_ASSOC);
 
+$result=$pdo->prepare($sql2);
+$result->execute([$_GET['id']]);
+
+$employees2=$result->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -51,7 +61,7 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
 					<b>Pareigos: </b> <br /> <?=$employee['positions_name']?>
 				</p>
 				
-				<p class="text-center">
+				<p>
 					<b>Mėnesinė alga: </b> <br /><?=$alga?> EUR
 				</p>
 				</div>
@@ -63,6 +73,12 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
 				</p>
 				</div>
                 <?php } ?>
+				<h4>Projektų sąrašas:</h4>
+				<?php foreach($employees2 as $employee1){ 
+					
+					?>
+				<span><?=($employee1['projektas'] > 0)? $employee1['projektas'] :'Nėra priskirtų projektų'?></span><br>                    
+					<?php } ?>
 			</div>
 				</div>
 			</div>

@@ -13,6 +13,7 @@
       $birthday = test_input($_POST["birthday"]);
       $education = test_input($_POST["education"]);
       $salary = test_input($_POST["salary"]);
+      $position = $_POST['positions_id'];
     
       if(empty($name)) {
         $error['vardas'] = "Vardas privalomas";
@@ -44,11 +45,14 @@
       if(empty($salary)) {
         $salary = 0;
       } 
-   
+      if(empty($position)){
+        $position = 5;
+      }
+
 if(empty($error)){
-        $sql="INSERT INTO employees (name, surname, gender, phone, birthday, education, salary) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql="INSERT INTO employees (name, surname, gender, phone, birthday, education, salary, positions_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stm=$pdo->prepare($sql);
-        $stm->execute([ $_POST['name'], $_POST['surname'], $gender, $phone, $birthday, $education, $salary]);
+        $stm->execute([ $_POST['name'], $_POST['surname'], $gender, $phone, $birthday, $education, $salary, $position]);
         header("location:darbuotojai.php");
         die();
     }
@@ -123,6 +127,15 @@ if(empty($error)){
                                 <label for="" class="form-label">Atlyginimas</label>
                                 <input name="salary" type="text" class="form-control" placeholder="Vesti sumą centais" >
                             </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Pareigos: </label>
+                                <select name="positions_id" class="form-control mb-3">
+                                    <option value="1">Direktorius</option>
+                                    <option value="2">Buhalteris</option> 
+                                    <option value="3">Programuotojas</option> 
+                                    <option value="4">Dizaineris</option> 
+                                    <option value="5">Vadybininkas</option>                                     
+                                </select>
                             <button class="btn btn-success">Pridėti</button>
                             <a href="darbuotojai.php" class="btn btn-info float-end">Atgal</a>
 

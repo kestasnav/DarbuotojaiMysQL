@@ -1,9 +1,14 @@
-
 <?php
 
 include("dblogin.php");
-$sql="SELECT *, employees.name as vardas, employees.surname as pavarde, positions.name as pareigos FROM employees 
-LEFT JOIN positions ON positions.id=employees.positions_id WHERE positions.id=?";
+/* $sql="SELECT *, employees.name as vardas, employees.surname as pavarde, projects.name as projektas FROM employees 
+LEFT JOIN employees_projects ON employees.id=employees_projects.projects_id
+LEFT JOIN projects ON employees_id=employees.id WHERE employees.id=?"; */
+$sql="SELECT employees.name as vardas, employees.surname as pavarde, projects.name as projektas, positions.name as pareigos FROM employees_projects 
+LEFT JOIN employees ON employees.id = employees_id 
+LEFT JOIN projects ON projects.id=projects_id 
+LEFT JOIN positions ON employees.positions_id=positions.id
+WHERE projects.id=?";
 $result=$pdo->prepare($sql);
 $result->execute([$_GET['id']]);
 
@@ -36,6 +41,7 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
                                     <th>Vardas</th>
                                     <th>Pavardė</th>
                                     <th>Pareigos</th>
+                                    <th>Projektas</th>
                                     <th></th>                                   
                                 </tr>
                             </thead>
@@ -45,7 +51,8 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
                    
                    ?>               <td><?=$employee['vardas']?></td>
                                     <td><?=$employee['pavarde']?></td>
-                                    <td><?=$employee['pareigos']?></td>                                    
+                                    <td><?=$employee['pareigos']?></td>
+                                    <td><?=$employee['projektas']?></td>                                    
                                     </tr>
                                 <?php }  ?>
                               
@@ -57,4 +64,3 @@ $employees=$result->fetchAll(PDO::FETCH_ASSOC);
     
 </body>
 </html>
-
