@@ -7,4 +7,4 @@
 # Redagavimas
 # ![screencapture-localhost-MySQL-Darbuotojai-update-php-2022-09-12-07_19_32](https://user-images.githubusercontent.com/107037107/189573369-31328daa-5a67-41f9-aa48-e6eae09ac8bd.png)
 # Detalus vieno darbuotojo atvaizdavimas
-# ![screencapture-localhost-MySQL-Darbuotojai-darbuotojas-php-2022-09-13-16_13_05](https://user-images.githubusercontent.com/107037107/189910415-c9b6a9a6-cce9-4ca6-a35a-cd680ba3d557.png)
+# ![screencapture-localhost-MySQL-Darbuotojai-darbuotojas-php-2022-09-13-19_51_08](https://user-images.githubusercontent.com/107037107/189960675-b3069b2d-67b1-4d49-ac37-73cc4ac52e26.png)
