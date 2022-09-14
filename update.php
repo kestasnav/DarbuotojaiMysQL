@@ -82,11 +82,10 @@
                             </div> -->
                             <div class="mb-3">
                                 <label for="" class="form-label">Lytis: </label>
-                                <select name="positions_id" class="form-control mb-3">                                   
-                                        
-                                    <option value="<?=$employee['gender']?>"  <?=($employee['gender']==null)?'':'selected'?>><?=$employee['gender']?></option>
-                                    <option value="Vyras">Vyras</option>
-                                    <option value="Moteris">Moteris</option>  
+                                <select id="gender" name="gender" class="form-control mb-3">                                   
+                                <option value="" disabled selected>Pasirinkite lytį</option>
+                                    <option value="Vyras" <?=($employee['gender']=='Vyras')?'selected':''?>>Vyras</option>
+                                    <option value="Moteris" <?=($employee['gender']=='Moteris')?'selected':''?>>Moteris</option>
                                 </select>
                             <div class="mb-3">
                                 <label for="" class="form-label">Telefonas</label>
